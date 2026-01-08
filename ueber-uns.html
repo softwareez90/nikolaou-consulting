@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Über uns | Nikolaou Consulting</title>
+    
+    <!-- Google Fonts Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Farbpalette: "Executive Earth" - Seriös, aber modern und warm */
+            --bg-body: #F2F0EB;
+            --bg-card: #FFFFFF;
+            --text-main: #2C2C2C;
+            --text-muted: #666666;
+            --primary: #1F3B34; /* Tiefes Waldgrün */
+            --accent: #C87943; /* Gebranntes Orange/Bronze */
+            --border: #DCD6CC;
+            
+            /* Spacing & Layout */
+            --container-padding: 5vw;
+            --grid-gap: 2rem;
+            
+            /* Typography */
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Manrope', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-feature-settings: "ss01", "ss04";
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            line-height: 1.1;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            letter-spacing: -0.02em;
+            color: var(--primary);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 60ch;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s ease;
+        }
+
+        /* --- Layout Elements --- */
+        .container {
+            padding: 0 var(--container-padding);
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .section-padding {
+            padding-top: 8rem;
+            padding-bottom: 8rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: #fff;
+        }
+
+        .btn:hover::before {
+            width: 100%;
+        }
+
+        /* --- Header / Nav --- */
+        header {
+            padding: 2rem var(--container-padding);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(242, 240, 235, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: -0.03em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Active Link Override for current page */
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+            align-items: end;
+        }
+
+        .hero-text h1 span {
+            display: block;
+            margin-left: 2rem;
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-description {
+            border-left: 1px solid var(--primary);
+            padding-left: 2rem;
+            padding-bottom: 1rem;
+        }
+
+        .hero-description p {
+            margin-bottom: 2rem;
+        }
+
+        /* --- Stats / Divider --- */
+        .marquee-strip {
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+            font-family: var(--font-sans);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.9rem;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- About Section (Asymmetric) --- */
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-img {
+            background-color: #dcdcdc;
+            height: 100%;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Abstract geometrical shape instead of stock photo */
+        .about-img::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+        }
+        
+        .about-img::before {
+            content: '';
+            position: absolute;
+            top: 45%;
+            left: 45%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            border: 1px solid var(--accent);
+            border-radius: 0;
+        }
+
+        .about-text {
+            padding: 8rem 5vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .subtitle {
+            font-family: var(--font-sans);
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        /* --- Services (Grid) --- */
+        .services {
+            background: var(--bg-card);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--border);
+        }
+
+        .service-card {
+            padding: 4rem 3rem;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 400px;
+        }
+
+        .service-card:nth-child(3n) {
+            border-right: none;
+        }
+
+        .service-card:hover {
+            background: #FAFAFA;
+        }
+
+        .service-num {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-family: var(--font-serif);
+            color: var(--primary);
+        }
+        
+        .service-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .service-link {
+            align-self: flex-start;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            margin-top: auto;
+            color: var(--primary);
+        }
+
+        .service-link span {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .service-link span {
+            transform: translateX(5px);
+        }
+
+        /* --- Quote / Philosophy --- */
+        .philosophy {
+            text-align: center;
+            background-color: var(--primary);
+            color: #fff;
+        }
+
+        .philosophy h3 {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            max-width: 30ch;
+            margin: 0 auto 3rem auto;
+            line-height: 1.3;
+        }
+        
+        .philosophy p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 6rem var(--container-padding) 2rem;
+            background-color: #111;
+            color: #fff;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+        }
+
+        .footer-brand h2 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: #888;
+            max-width: 300px;
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            font-weight: 300;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .address-block {
+            font-style: normal;
+            color: #ccc;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .copyright {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+            .hero-description {
+                border-left: none;
+                padding-left: 0;
+                border-top: 1px solid var(--primary);
+                padding-top: 2rem;
+            }
+            .about-section {
+                grid-template-columns: 1fr;
+            }
+            .about-img {
+                height: 400px;
+                min-height: auto;
+                order: -1;
+            }
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .service-card:nth-child(2n) {
+                border-right: none;
+            }
+            .service-card:nth-child(3n) {
+                border-right: 1px solid var(--border);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; } /* Mobile Menu would go here in full version */
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .service-card {
+                border-right: none;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <a href="index.html" class="logo">Nikolaou<span>.</span></a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Startseite</a></li>
+                <li><a href="ueber-uns.html" class="active">Über Uns</a></li>
+                <li><a href="leistungen.html">Leistungen</a></li>
+                <li><a href="kontakt.html">Kontakt</a></li>
+                <li><a href="impressum.html">Impressum</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Unsere <br><span>Identität.</span></h1>
+            </div>
+            <div class="hero-description">
+                <p>Wir glauben nicht an Standardlösungen. Wir glauben an strategische Präzision, menschliche Zusammenarbeit und nachhaltigen Wandel. Erfahren Sie, wer wir sind und was uns antreibt.</p>
+                <a href="#vision" class="btn">Unsere Vision</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee Divider -->
+    <div class="marquee-strip">
+        <div class="marquee-content">
+            STRATEGIE • VERANTWORTUNG • INTEGRITÄT • INNOVATION • PARTNERSCHAFT • EXZELLENZ • STRATEGIE • VERANTWORTUNG • INTEGRITÄT • INNOVATION • PARTNERSCHAFT • EXZELLENZ •
+        </div>
+    </div>
+
+    <!-- Main Narrative Section -->
+    <section id="vision" class="about-section">
+        <div class="about-img">
+            <!-- Abstract shapes defined in CSS ::before/::after -->
+        </div>
+        <div class="about-text">
+            <span class="subtitle">Die Gründung</span>
+            <h2>Vom Gedanken<br>zur Institution.</h2>
+            <p>
+                Nikolaou Consulting wurde 2015 in Köln gegründet, getrieben von der Überzeugung, dass Unternehmensberatung mehr sein muss als das Präsentieren von Folien. Wir sahen eine Lücke zwischen hochstrategischen Konzernstrukturen und der pragmatischen Umsetzungskraft des Mittelstands.
+            </p>
+            <br>
+            <p>
+                Heute sind wir ein interdisziplinäres Team aus Ökonomen, Ingenieuren und Strategen. Wir verbinden analytische Schärfe mit empathischer Führungskultur. Unser Ziel ist nicht das kurzfristige Projektende, sondern die langfristige Resilienz unserer Klienten.
+            </p>
+        </div>
+    </section>
+
+    <!-- Values / Principles Grid -->
+    <section class="services section-padding">
+        <div class="container">
+            <span class="subtitle" style="margin-bottom: 2rem; display:block;">Unsere Prinzipien</span>
+            <h2>Wofür wir stehen.</h2>
+            
+            <div class="services-grid">
+                <!-- Value 1 -->
+                <div class="service-card">
+                    <div>
+                        <div class="service-num">01</div>
+                        <h3 class="service-title">Klarheit.</h3>
+                        <p class="service-desc">
+                            Wir sprechen Dinge aus, wie sie sind. Komplexe Herausforderungen erfordern klare Sprache und transparente Analysen, keine Buzzwords.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="service-card">
+                    <div>
+                        <div class="service-num">02</div>
+                        <h3 class="service-title">Substanz.</h3>
+                        <p class="service-desc">
+                            Wir liefern messbare Ergebnisse. Jede Strategie wird an ihrer Umsetzbarkeit gemessen. Wir bleiben, bis der Wandel greift.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="service-card">
+                    <div>
+                        <div class="service-num">03</div>
+                        <h3 class="service-title">Empathie.</h3>
+                        <p class="service-desc">
+                            Unternehmen sind soziale Systeme. Wir beraten nicht nur Organisationen, sondern arbeiten mit den Menschen, die sie tragen.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Quote -->
+    <section class="philosophy section-padding">
+        <div class="container">
+            <h3>"Wahrer Fortschritt entsteht dort, wo Tradition geachtet und Innovation gewagt wird. Wir bauen die Brücke dazwischen."</h3>
+            <p>— Alexander Nikolaou, Gründer & Managing Partner</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2>Nikolaou.</h2>
+                    <p>Unternehmensberatung für den Mittelstand und Konzerne. Wir gestalten Zukunft.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="ueber-uns.html">Über uns</a></li>
+                        <li><a href="leistungen.html">Leistungen</a></li>
+                        <li><a href="kontakt.html">Karriere</a></li>
+                        <li><a href="impressum.html">Datenschutz</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Kontakt</h4>
+                    <address class="address-block">
+                        Nikolaou Consulting<br>
+                        Apostelnstraße 5<br>
+                        50667 Köln<br>
+                        Deutschland
+                    </address>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <span>&copy; 2026 Nikolaou Consulting. Alle Rechte vorbehalten.</span>
+                <span><a href="impressum.html" style="color: #555;">Impressum</a></span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
